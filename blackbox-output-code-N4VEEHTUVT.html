@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarah the Hacker</title>
+    <style>
+        body {
+            background: linear-gradient(45deg, #000000, #ff0000, #000000);
+            background-size: 400% 400%;
+            animation: gradientShift 5s ease infinite;
+            color: #ffffff;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .computer-images {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .computer-images img {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            opacity: 0.7;
+        }
+
+        .computer-images img:nth-child(1) { top: 10%; left: 10%; }
+        .computer-images img:nth-child(2) { top: 10%; right: 10%; }
+        .computer-images img:nth-child(3) { bottom: 10%; left: 10%; }
+        .computer-images img:nth-child(4) { bottom: 10%; right: 10%; }
+        .computer-images img:nth-child(5) { top: 50%; left: 5%; transform: translateY(-50%); }
+        .computer-images img:nth-child(6) { top: 50%; right: 5%; transform: translateY(-50%); }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #ff0000;
+        }
+
+        p {
+            font-size: 1.5em;
+            margin-bottom: 40px;
+        }
+
+        .question {
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+        button {
+            font-size: 1.5em;
+            padding: 15px 30px;
+            margin: 10px;
+            border: 2px solid #ff0000;
+            background: #000000;
+            color: #ffffff;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #ff0000;
+        }
+
+        #noButton {
+            position: relative;
+        }
+
+        .final-message {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            color: #ff0000;
+            font-size: 3em;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div class="computer-images">
+        <img src="https://via.placeholder.com/100x100/333333/ffffff?text=PC" alt="Computer">
+        <img src="https://via.placeholder.com/100x100/333333/ffffff?text=Laptop" alt="Laptop">
+        <img src="https://via.placeholder.com/100x100/333333/ffffff?text=Server" alt="Server">
+        <img src="https://via.placeholder.com/100x100/333333/ffffff?text=Keyboard" alt="Keyboard">
+        <img src="https://via.placeholder.com/100x100/333333/ffffff?text=Monitor" alt="Monitor">
+        <img src="https://via.placeholder.com/100x100/333333/ffffff?text=Code" alt="Code">
+    </div>
+    <div class="container">
+        <h1>Sarah the Hacker</h1>
+        <p>Sarah adalah seorang hacker legendaris yang menguasai dunia digital. Dengan kode-kode rahasia dan keahlian luar biasa, dia bisa menembus sistem apa saja.</p>
+        <div class="question">Apakah kamu percaya bahwa Sarah cocok jadi hacker?</div>
+        <button id="yesButton">Ya</button>
+        <button id="noButton">Tidak</button>
+    </div>
+    <div class="final-message" id="finalMessage">
+        Karena kamu mengakui aku sebagai hacker maka hp mu aku hacker selamanya.
+    </div>
+
+    <script>
+        const noButton = document.getElementById('noButton');
+        const yesButton = document.getElementById('yesButton');
+        const finalMessage = document.getElementById('finalMessage');
+
+        let moveInterval;
+        let clickCount = 0;
+
+        noButton.addEventListener('click', () => {
+            clickCount++;
+            if (clickCount < 10) { // After 10 clicks, stop moving and force "Ya"
+                startMoving();
+            } else {
+                alert("Cukup! Kamu sudah lelah. Sekarang klik Ya!");
+                noButton.style.display = 'none';
+            }
+        });
+
+        yesButton.addEventListener('click', () => {
+            clearInterval(moveInterval);
+            document.querySelector('.container').style.display = 'none';
+            finalMessage.style.display = 'flex';
+        });
+
+        function startMoving() {
+            clearInterval(moveInterval);
+            moveInterval = setInterval(() => {
+                const x = Math.random() * (window.innerWidth - 200);
+                const y = Math.random() * (window.innerHeight - 100);
+                noButton.style.position = 'absolute';
+                noButton.style.left = x + 'px';
+                noButton.style.top = y + 'px';
+            }, 500);
+        }
+    </script>
+</body>
+</html>
